@@ -7,15 +7,8 @@ class App extends Component{
     render(){
         return (
             <div>
-                <div className='container'>
-                    <div className='row mt-5'>
-                        <div className='col-md-6 m-auto'>
-                            <Login/>
-                        </div> 
-                     </div>
-                </div>
-            </div>
-            
+              <Login/>     
+            </div>         
         );
     }
 }

@@ -12,12 +12,19 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
+import axios from "axios"
+
+import { useState } from "react";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" >
         DataAsAsset
       </Link>{' '}
       {new Date().getFullYear()}
@@ -26,21 +33,23 @@ function Copyright() {
   );
 }
 
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
+    fontSize:'8px',
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor:'#ffffffba'
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main 
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+    fontSize:'8px',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -49,31 +58,76 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState();
+
+
+const HandleSubmit = async e => {
+  e.preventDefault();
+
+  const Myuser = { username, password };
+  // send the username and password to the server
+
+  const requestOptions = {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://127.0.0.1:3000','Access-Control-Allow-Credentials': 'true','Authorization':"mongodb+srv://Meidan1234:Meidan1234@cluster0.v7dog.mongodb.net/mytable?retryWrites=true&w=majority"},
+    body: Myuser
+};
+
+// fetch('http://localhost:4000/app/login', requestOptions)
+//     .then(response => response.json())
+//     .then(data => this.setState({ postId: data.id }));
+
+  axios.post('http://https://daabackend.netlify.app/app/login', Myuser)
+  .then(res => {
+    console.log(res);
+    console.log(res.data);
+  }).catch(err => {
+    console.log(err);
+  })
+  
+  
+ 
+  // store the user in localStorage
+
+  };
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-    
+
+      
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+      
         </Avatar>
-       
-     
+
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={HandleSubmit} className={classes.form} noValidate>
+         
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            name="username"
+            autoComplete="username"
             autoFocus
+            label="User Name"
+            placeholder="User Name"
+            onChange={({ target }) => setUsername(target.value)}
+            InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonOutlineOutlinedIcon />
+                  </InputAdornment>
+                 
+                ),  }}
           />
           <TextField
             variant="outlined"
@@ -84,7 +138,16 @@ export default function SignIn() {
             label="Password"
             type="password"
             id="password"
+            placeholder="Password"
             autoComplete="current-password"
+            onChange={({ target }) => setPassword(target.value)}
+            InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                   <LockOpenIcon/>
+                  </InputAdornment>
+                 
+                ),  }}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -113,7 +176,7 @@ export default function SignIn() {
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
+      <Box mt={8} color="white">
         <Copyright />
       </Box>
     </Container>
