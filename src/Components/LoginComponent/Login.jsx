@@ -69,18 +69,18 @@ const HandleSubmit = async e => {
   const Myuser = { username, password };
   // send the username and password to the server
 
-  const requestOptions = {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://127.0.0.1:3000','Access-Control-Allow-Credentials': 'true','Authorization':"mongodb+srv://Meidan1234:Meidan1234@cluster0.v7dog.mongodb.net/mytable?retryWrites=true&w=majority"},
-    body: Myuser
-};
+//   const requestOptions = {
+//     method: 'POST',
+//     credentials: 'include',
+//     headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://127.0.0.1:3000','Access-Control-Allow-Credentials': 'true','Authorization':"mongodb+srv://Meidan1234:Meidan1234@cluster0.v7dog.mongodb.net/mytable?retryWrites=true&w=majority"},
+//     body: Myuser
+// };
 
 // fetch('http://localhost:4000/app/login', requestOptions)
 //     .then(response => response.json())
 //     .then(data => this.setState({ postId: data.id }));
 
-  axios.post('http://https://daabackend.netlify.app/app/login', Myuser)
+  axios.post('https://dataasasset.herokuapp.com/app/login', Myuser)
   .then(res => {
     console.log(res);
     console.log(res.data);
