@@ -59,7 +59,7 @@ router.post('/login', async (request,response) => {
     const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
     
     try {
-    response.send('sucsess!');
+    response.send(user);
     }
     catch (err) {
         response.json(err)

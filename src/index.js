@@ -4,7 +4,6 @@ import App from './App';
 import BIRDS from 'vanta/dist/vanta.net.min'
 import './index.css';
 import { Homepage } from './Components/DashboardComponent/HomePage';
-import { BrowserRouter, Route,Switch } from "react-router-dom";
 
 class Venta extends React.Component {
   constructor() {
@@ -34,16 +33,13 @@ class Venta extends React.Component {
   render() {
     return <div ref={this.vantaRef}>
       <App />
-      <Route exact path="/dashboard" component={Homepage}/>  
     </div>
   }
 }
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
     <Venta />
-    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

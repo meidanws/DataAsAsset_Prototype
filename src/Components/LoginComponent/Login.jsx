@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+import LinkUI from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -13,27 +13,37 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import axios from "axios"
 import { useState } from "react";
-import { Homepage } from '../DashboardComponent/HomePage';
-import { BrowserRouter, Route } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import auth from "./auth";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+
 
 function Copyright() {
   return (
     <Typography variant="body2" align="center">
       {'Copyright © '}
-      <Link color="inherit" >
+      <LinkUI color="inherit" >
         DataAsAsset
-      </Link>{' '}
+      </LinkUI>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -58,12 +68,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function SignIn() {
   const classes = useStyles();
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
+  const [open, setOpen] = React.useState(false);
+  const history = useHistory();
 
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+     
+    setOpen(false);
+  };
 
 const HandleSubmit = async e => {
   e.preventDefault();
@@ -72,34 +94,33 @@ axios.post('http://localhost:4000/app/login', {
   userName,password
 }, )
 .then(response => { 
-  console.log(response)
+  console.log(response.data)
   if(response.status == 200){
-    // store the user in localStorage
-  console.log("great!")
+  //Go to dashboard page
   auth.login(() =>{
-   // this.props.history.push("/dashboard");
+     // store the user in localStorage
+    localStorage.setItem('user', JSON.stringify(response.data));
+    history.push('/dashboard')
   })
-    };
+
+  
+}
 })
 .catch(error => {
-    console.log(error.response)
+    console.log(error.response);
+    handleClickOpen();
 });
-
-
 }
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-
-      
-        <Avatar className={classes.avatar}>
-      
-        </Avatar>
+ 
+      <img src={'images/logo.png'} alt="A " width="100px" />
 
         <Typography component="h1" variant="h5">
-          Sign in
+          - Sign in -
         </Typography>
         <form onSubmit={HandleSubmit} className={classes.form} noValidate>
          
@@ -139,8 +160,7 @@ axios.post('http://localhost:4000/app/login', {
                 startAdornment: (
                   <InputAdornment position="start">
                    <LockOpenIcon/>
-                  </InputAdornment>
-                 
+                  </InputAdornment> 
                 ),  }}
           />
           <FormControlLabel
@@ -158,14 +178,14 @@ axios.post('http://localhost:4000/app/login', {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <LinkUI href="#" variant="body2">
                 Forgot password?
-              </Link>
+              </LinkUI>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <LinkUI href="#" variant="body2">
                 {"Don't have an account? Sign Up"}
-              </Link>
+              </LinkUI>
             </Grid>
           </Grid>
         </form>
@@ -173,7 +193,32 @@ axios.post('http://localhost:4000/app/login', {
       <Box mt={8} color="white">
         <Copyright />
       </Box>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"    
+      > 
+        <DialogTitle id="alert-dialog-title">{"Oops!"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            User name or Password are not correct
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>    
+          <Button onClick={handleClose} color="primary" autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+      
     </Container>
+
+    
     
   );
+
+  
 }
