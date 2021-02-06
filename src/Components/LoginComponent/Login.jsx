@@ -17,8 +17,10 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import axios from "axios"
-
 import { useState } from "react";
+import { Homepage } from '../DashboardComponent/HomePage';
+import { BrowserRouter, Route } from "react-router-dom";
+import auth from "./auth";
 
 function Copyright() {
   return (
@@ -58,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const [username, setUsername] = useState("");
+  const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState();
 
@@ -66,33 +68,25 @@ export default function SignIn() {
 const HandleSubmit = async e => {
   e.preventDefault();
 
-  const Myuser = { username, password };
-  // send the username and password to the server
-
-//   const requestOptions = {
-//     method: 'POST',
-//     credentials: 'include',
-//     headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://127.0.0.1:3000','Access-Control-Allow-Credentials': 'true','Authorization':"mongodb+srv://Meidan1234:Meidan1234@cluster0.v7dog.mongodb.net/mytable?retryWrites=true&w=majority"},
-//     body: Myuser
-// };
-
-// fetch('http://localhost:4000/app/login', requestOptions)
-//     .then(response => response.json())
-//     .then(data => this.setState({ postId: data.id }));
-
-  axios.post('https://dataasasset.herokuapp.com/app/login', Myuser)
-  .then(res => {
-    console.log(res);
-    console.log(res.data);
-  }).catch(err => {
-    console.log(err);
+axios.post('http://localhost:4000/app/login', {
+  userName,password
+}, )
+.then(response => { 
+  console.log(response)
+  if(response.status == 200){
+    // store the user in localStorage
+  console.log("great!")
+  auth.login(() =>{
+    this.props.history.push("/dashboard");
   })
-  
-  
- 
-  // store the user in localStorage
+    };
+})
+.catch(error => {
+    console.log(error.response)
+});
 
-  };
+
+}
 
   return (
     <Container component="main" maxWidth="xs">
@@ -180,5 +174,6 @@ const HandleSubmit = async e => {
         <Copyright />
       </Box>
     </Container>
+    
   );
 }

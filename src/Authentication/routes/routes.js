@@ -1,4 +1,3 @@
-const { response } = require('express');
 const express = require('express');
 require('express-async-errors');
 const router = require('express').Router();

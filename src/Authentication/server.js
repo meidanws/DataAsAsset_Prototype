@@ -5,15 +5,11 @@ const dotenv = require('dotenv')
 const routesUrls = require('./routes/routes.js')
 const cors = require('cors')
 
+dotenv.config();
 
-// Routes 
-app.use('/', require('./routes/routes'))
+mongoose.connect(process.env.DATABASE_ACCESS, () => {console.log("DataBase connected")});
 
-dotenv.config()
-
-mongoose.connect(process.env.DATABASE_ACCESS, () => {console.log("DataBase connected")})
-
-app.use(express.json())
-app.use(cors())
-app.use('/app', routesUrls)
-app.listen(process.env.PORT || 4000, () => console.log("Server is up and running"))
+app.use(express.json());
+app.use(cors());
+app.use('/app', routesUrls);
+app.listen(process.env.PORT || 4000, () => console.log("Server is up and running"));
