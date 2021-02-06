@@ -77,7 +77,7 @@ axios.post('http://localhost:4000/app/login', {
     // store the user in localStorage
   console.log("great!")
   auth.login(() =>{
-    this.props.history.push("/dashboard");
+   // this.props.history.push("/dashboard");
   })
     };
 })
