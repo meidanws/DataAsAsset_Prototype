@@ -102,8 +102,6 @@ axios.post('http://localhost:4000/app/login', {
     localStorage.setItem('user', JSON.stringify(response.data));
     history.push('/dashboard')
   })
-
-  
 }
 })
 .catch(error => {
