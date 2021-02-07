@@ -47,19 +47,21 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(6),
     display: 'flex',
-    fontSize:'8px',
+    fontSize:'10px',
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor:'#ffdadaba'
+    backgroundColor:'#fafafa',
+    height:'100%'
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main 
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%', // Fix IE 11 issue.,
+    height:'100%',
     marginTop: theme.spacing(1),
     fontSize:'8px',
   },
@@ -68,12 +70,11 @@ const useStyles = makeStyles((theme) => ({
   },
   TextField:{
     textAlign: 'center',
-    marginLeft:'60px'
+    marginLeft:'70px'
   },
   image:{
     marginTop:'inherit'
   }
-  
 }));
 
 
@@ -98,7 +99,7 @@ export default function SignIn() {
 const HandleSubmit = async e => {
   e.preventDefault();
 
-axios.post('http://localhost:4000/app/login', {
+axios.post('https://dataasasset.herokuapp.com/app/login', {
   userName,password
 }, )
 .then(response => { 
@@ -219,12 +220,6 @@ axios.post('http://localhost:4000/app/login', {
           </Button>
         </DialogActions>
       </Dialog>
-      
     </Container>
-
-    
-    
   );
-
-  
 }

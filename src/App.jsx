@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
 import Login from './Components/LoginComponent/Login'
-import ReactDOM from 'react-dom'
 import  Homepage  from './Components/DashboardComponent/HomePage'
 import { BrowserRouter as Router, Route ,Switch } from "react-router-dom";
 
