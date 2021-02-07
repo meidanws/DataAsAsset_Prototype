@@ -30,16 +30,12 @@ class Venta extends React.Component {
   componentWillUnmount() {
     if (this.vantaEffect) this.vantaEffect.destroy()
   }
-  render() {
-    return <div ref={this.vantaRef}>
-      <App />
-    </div>
-  }
+  
 }
 
 ReactDOM.render(
   <React.StrictMode>
-    <Venta />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

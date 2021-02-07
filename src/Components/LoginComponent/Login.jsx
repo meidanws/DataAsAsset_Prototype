@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize:'8px',
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor:'#ffffffba'
+    backgroundColor:'#ffdadaba'
   },
   avatar: {
     margin: theme.spacing(1),
@@ -66,6 +66,11 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  TextField:{
+    textAlign: 'center',
+    marginLeft:'60px'
+  }
+  
 }));
 
 
@@ -115,7 +120,7 @@ axios.post('http://localhost:4000/app/login', {
       <CssBaseline />
       <div className={classes.paper}>
  
-      <img src={'images/logo.png'} alt="A " width="100px" />
+      <img src={'images/logo.png'} alt="A " width="50px" />
 
         <Typography component="h1" variant="h5">
           - Sign in -
@@ -126,7 +131,7 @@ axios.post('http://localhost:4000/app/login', {
             variant="outlined"
             margin="normal"
             required
-            fullWidth
+            className={classes.TextField}
             id="username"
             name="username"
             autoComplete="username"
@@ -146,7 +151,7 @@ axios.post('http://localhost:4000/app/login', {
             variant="outlined"
             margin="normal"
             required
-            fullWidth
+            className={classes.TextField}
             name="password"
             label="Password"
             type="password"
