@@ -69,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
   TextField:{
     textAlign: 'center',
     marginLeft:'60px'
+  },
+  image:{
+    marginTop:'inherit'
   }
   
 }));
@@ -120,7 +123,7 @@ axios.post('http://localhost:4000/app/login', {
       <CssBaseline />
       <div className={classes.paper}>
  
-      <img src={'images/logo.png'} alt="A " width="50px" />
+      <img src={'images/logo.png'} alt="A " className={classes.image} width="60px" />
 
         <Typography component="h1" variant="h5">
           - Sign in -
@@ -193,7 +196,7 @@ axios.post('http://localhost:4000/app/login', {
           </Grid>
         </form>
       </div>
-      <Box mt={8} color="white">
+      <Box mt={8}  >
         <Copyright />
       </Box>
       <Dialog
